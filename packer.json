@@ -1,9 +1,10 @@
 {
-  "variables": {},
+  "variables": {
+  },
   "builders": [{
     "type": "docker",
     "image": "node:4-slim",
-    "commit": true
+    "export_path": "image.tar"
   }],
   "provisioners": [
     {
@@ -21,15 +22,13 @@
     }
   ],
   "post-processors": [
-    [
-      {
-        "type": "docker-tag",
-        "repository": "587143430827.dkr.ecr.us-east-1.amazonaws.com/poc-repo",
-        "tag": "0.1"
-      },
-      {
-        "type": "docker-push"
+    {
+      "type": "amazon-import",
+      "region": "ap-southeast-2",
+      "s3_bucket_name": "poc-asgh",
+      "tags": {
+        "Description": "packer amazon-import {{timestamp}}"
       }
-    ]
+    }
   ]
 }
