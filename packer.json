@@ -20,5 +20,15 @@
         "npm install"
       ]
     }
+  ],
+  "post-processors": [
+    {
+      "type": "atlas",
+      "artifact": "disintegrator/echoserver",
+      "artifact_type": "docker.image",
+      "metadata": {
+        "created_at": "{{timestamp}}"
+      }
+    }
   ]
 }
