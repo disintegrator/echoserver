@@ -1,0 +1,35 @@
+{
+  "variables": {},
+  "builders": [{
+    "type": "docker",
+    "image": "node:4-slim",
+    "commit": true
+  }],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": ".",
+      "destination": "/app"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "echo Install app dependencies",
+        "cd /app",
+        "npm install"
+      ]
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "587143430827.dkr.ecr.us-east-1.amazonaws.com/poc-repo",
+        "tag": "0.1"
+      },
+      {
+        "type": "docker-push"
+      }
+    ]
+  ]
+}
